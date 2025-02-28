@@ -11,7 +11,7 @@ data "aws_security_group" "instance_sg" {
 
 variable "components" {
   default = {
-    forntend = {
+    frontend = {
       name          = "frontend"
       instance_type = "t3.micro"
     }
