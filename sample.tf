@@ -19,15 +19,15 @@ resource "aws_instance" "instance" {
   }
 }
 
-/*resource "aws_route53_record" "records" {
+resource "aws_route53_record" "records" {
   zone_id = "Z02795351QOID794T5B10"
-  name    = "meghadevops.site"
+  name    = "frontend-dev.meghadevops.site"
   type    = "A"
   ttl     = 30
-  records = [aws_eip.lb.public_ip]
-}*/
-/*
+  records = [aws_instance.instance.private_ip]
+}
 
+/*
 variable "components" {
   default = {
     forntend = {
