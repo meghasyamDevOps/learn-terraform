@@ -9,26 +9,6 @@ data "aws_security_group" "instance_sg" {
   name = "allow-all"
 }
 
-resource "aws_instance" "instance" {
-  for_each               = var.components
-  ami                    = data.aws_ami.ami.id
-  instance_type          = each.value["instance_type"]
-  vpc_security_group_ids = [data.aws_security_group.instance_sg.id]
-
-  tags = {
-    Name = each.value["name"]
-  }
-}
-
-resource "aws_route53_record" "records" {
-  for_each = var.components
-  zone_id = "Z02795351QOID794T5B10"
-  name    = "${each.value["name"]}-dev.meghadevops.site"
-  type    = "A"
-  ttl     = 30
-  records = [aws_instance.instance[each.value["name"]].private_ip]
-}
-
 variable "components" {
   default = {
     forntend = {
@@ -76,4 +56,24 @@ variable "components" {
       instance_type = "t3.small"
     }
   }
+}
+
+resource "aws_instance" "instance" {
+  for_each               = var.components
+  ami                    = data.aws_ami.ami.id
+  instance_type          = each.value["instance_type"]
+  vpc_security_group_ids = [data.aws_security_group.instance_sg.id]
+
+  tags = {
+    Name = each.value["name"]
+  }
+}
+
+resource "aws_route53_record" "records" {
+  for_each = var.components
+  zone_id = "Z02795351QOID794T5B10"
+  name    = "${each.value["name"]}-dev.meghadevops.site"
+  type    = "A"
+  ttl     = 30
+  records = [aws_instance.instance[each.value["name"]].private_ip]
 }
