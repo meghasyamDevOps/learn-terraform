@@ -10,24 +10,24 @@ data "aws_security_group" "instance_sg" {
 }
 
 resource "aws_instance" "instance" {
+  for_each               = var.components
   ami                    = data.aws_ami.ami.id
-  instance_type          = "t3.micro"
+  instance_type          = each.value["instance_type"]
   vpc_security_group_ids = [data.aws_security_group.instance_sg.id]
 
   tags = {
-    Name = "frontend"
+    Name = each.value["name"]
   }
 }
 
-resource "aws_route53_record" "records" {
+/*resource "aws_route53_record" "records" {
   zone_id = "Z02795351QOID794T5B10"
   name    = "frontend-dev.meghadevops.site"
   type    = "A"
   ttl     = 30
   records = [aws_instance.instance.private_ip]
-}
+}*/
 
-/*
 variable "components" {
   default = {
     forntend = {
@@ -75,4 +75,4 @@ variable "components" {
       instance_type = "t3.small"
     }
   }
-}*/
+}
