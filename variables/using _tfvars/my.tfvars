@@ -1,1 +1,1 @@
-my_variable1 = "Marlapati"
+my_variable2 = "Meghasyam"
