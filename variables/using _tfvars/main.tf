@@ -1,5 +1,6 @@
 variable "my_variable" {}
 variable "my_variable1" {}
+variable "my_variable2" {}
 
 output "variable" {
   value = var.my_variable
@@ -7,6 +8,10 @@ output "variable" {
 
 output "variable1" {
   value = var.my_variable1
+}
+
+output "variable2" {
+  value = var.my_variable2
 }
 
 ######
