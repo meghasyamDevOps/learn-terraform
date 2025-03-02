@@ -1,3 +1,3 @@
 output "my_variable" {
-  value = "welcome to terraform"
+  value = "welcome to terraform "
 }
